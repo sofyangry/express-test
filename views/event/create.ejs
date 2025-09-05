@@ -1,0 +1,78 @@
+<!-- @format -->
+<%- include("../partials/header.ejs") -%> <%- include("../partials/navbar.ejs")
+-%>
+<div class="container">
+	<div class="row mt-4">
+		<div class="col-md-9 offset-md-3">
+			<h1 class="display-4">Add New Event:</h1>
+			<%- include("../partials/flash.ejs") -%>
+
+			<hr />
+			<form
+				action="/events/create"
+				method="POST">
+				<div class="mb-3">
+					<label
+						for="title"
+						class="form-label"
+						>Title</label
+					>
+					<input
+						type="text"
+						name="title"
+						id="title"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="description"
+						class="form-label"
+						>Description</label
+					>
+					<textarea
+						name="description"
+						id="description"
+						rows="4"
+						class="form-control"></textarea>
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="location"
+						class="form-label"
+						>Location</label
+					>
+					<input
+						type="text"
+						name="location"
+						id="location"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="date"
+						class="form-label"
+						>Date</label
+					>
+					<input
+						type="date"
+						name="date"
+						id="date"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<button
+						type="submit"
+						class="btn btn-primary">
+						Create
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<%- include("../partials/footer.ejs") -%>

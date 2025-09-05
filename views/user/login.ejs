@@ -1,0 +1,46 @@
+<!-- @format -->
+
+<%- include('../partials/header') -%> <%- include('../partials/navbar') -%>
+<div
+	class="container"
+	style="margin-left: -1px">
+	<div class="row mt-4">
+		<div class="col-md-9 offset-md-3">
+			<h1 class="display-4">Login</h1>
+			<hr />
+
+			<%- include('../partials/flash') -%>
+
+			<form
+				action="/users/login"
+				method="post">
+				<div class="mb-3">
+					<label for="email">Email</label>
+					<input
+						type="text"
+						name="email"
+						id="email"
+						class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label for="password">Password</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<button
+						type="submit"
+						class="btn btn-primary">
+						Login
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<%- include('../partials/footer') -%>

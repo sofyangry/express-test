@@ -1,0 +1,89 @@
+<!-- @format -->
+<!-- @format -->
+<%- include("../partials/header.ejs") -%> <%- include("../partials/navbar.ejs")
+-%>
+<div class="container">
+	<div class="row mt-4">
+		<div class="col-md-9 offset-md-3">
+			<h1 class="display-4">Edit The Event:</h1>
+			<%- include("../partials/flash.ejs") -%>
+
+			<hr />
+			<form
+				action="/events/update"
+				method="POST">
+				<input
+					type="hidden"
+					name="id"
+					value="<%= event.id %>" />
+				<div class="mb-3">
+					<label
+						for="title"
+						class="form-label"
+						>Title</label
+					>
+					<input
+						type="text"
+						name="title"
+						id="title"
+						value="<%= event.title %>"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="description"
+						class="form-label"
+						>Description</label
+					>
+					<textarea
+						name="description"
+						id="description"
+						rows="4"
+						class="form-control">
+                        <%= event.description %>
+                        </textarea
+					>
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="location"
+						class="form-label"
+						>Location</label
+					>
+					<input
+						type="text"
+						name="location"
+						id="location"
+						value="<%= event.location %>"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<label
+						for="date"
+						class="form-label"
+						>Date</label
+					>
+					<input
+						type="date"
+						name="date"
+						id="date"
+						value="<%=eventDate%>"
+						class="form-control" />
+				</div>
+
+				<div class="mb-3">
+					<button
+						type="submit"
+						class="btn btn-primary">
+						Update
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<%- include("../partials/footer.ejs") -%>

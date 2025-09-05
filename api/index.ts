@@ -1,15 +1,53 @@
-// api/index.js
+/** @format */
 const express = require('express');
-const path = require('path');
-
 const app = express();
+const path = require('path');
+const connectDB = require('../config/database.js');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+const passportSetup = require('../config/passport-setup.js');
+connectDB();
 
-// Serve static files from /public
+app.set('view engine', 'ejs');
+
+//bring body parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'uploads')));
+app.use(express.static(path.join(__dirname, '..', 'node_modules')));
+//app.use(express.static('public'));
+//app.use(express.static('uploads'));
+//app.use(express.static('node_modules'));
+
+//Session and Flash Config
+app.use(
+	session({
+		secret: 'lorem ipsum',
+		resave: false,
+		saveUninitialized: false,
+		cookie: { maxAge: 60000 * 15 },
+	})
+);
+app.use(flash());
+//bring passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//store user object
+
+app.use((req, res, next) => {
+	res.locals.user = req.user || null;
+	next();
+});
 
 // Home route - HTML
 app.get('/', (req, res) => {
-  res.type('html').send(`
+	//res.redirect('/events');
+	res.type('html').send(`
     <!doctype html>
     <html>
       <head>
@@ -32,24 +70,15 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.get('/about', function (req, res) {
-	res.sendFile(path.join(__dirname, '..', 'components', 'about.htm'));
+//bring events routes
+const events = require('../routes/event-routes.js');
+app.use('/events', events);
+
+//bring user routes
+const users = require('../routes/user-routes.js');
+app.use('/users', users);
+
+//listen to port
+app.listen(process.env.PORT, () => {
+	console.log('Listning From Port ' + process.env.PORT);
 });
-
-// Example API endpoint - JSON
-app.get('/api-data', (req, res) => {
-  res.json({
-    message: 'Here is some sample API data',
-    items: ['apple', 'banana', 'cherry']
-  });
-});
-
-// Health check
-app.get('/healthz', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Local dev listener (ignored on Vercel)
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
-
-module.exports = app;
